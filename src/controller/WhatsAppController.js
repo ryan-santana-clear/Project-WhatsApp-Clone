@@ -212,7 +212,7 @@ class WhatsAppController {
 
         });
 
-        this.btnTakePicture.on('click', e=>{
+        this.el.btnTakePicture.on('click', e=>{
 
             console.log('take picture');
 
@@ -235,7 +235,7 @@ class WhatsAppController {
 
         });
 
-        this.btnSendDocument.on('click', e=>{
+        this.el.btnSendDocument.on('click', e=>{
 
             console.log('send document');
 
