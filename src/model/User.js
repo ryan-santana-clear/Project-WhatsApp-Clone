@@ -1,4 +1,4 @@
-import firebase from "./../util/Firebase";
+import firebase from "../util/Firebase";
 import { Model } from "./Model";
 
 export class User extends Model {
@@ -23,7 +23,7 @@ export class User extends Model {
 
     getById(id){
         
-        return new Promisse((s,f)=>{
+        return new Promisse((s, f)=>{
 
             User.findByEmail(id).onSnapshot(doc=>{
 
@@ -52,6 +52,16 @@ export class User extends Model {
     static findByEmail(email){
 
         return User.getRef().doc(email);
+
+    }
+
+    addContact(contact){
+
+        return User.getRef()
+        .doc(this.email)
+        .collection('contacts')
+        .doc(btoa(contact.email))
+        .set(contact.toJSON());
 
     }
 

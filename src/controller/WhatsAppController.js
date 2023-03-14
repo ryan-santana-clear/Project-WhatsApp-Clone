@@ -3,6 +3,7 @@ import {CameraController} from './CameraController';
 import {MicrophoneController} from './MicrophoneController';
 import {DocumentPreviewController} from './DocumentPreviewController';
 import { Firebase } from '../util/Firebase';
+import { User } from '../model/User';
 
 export class WhatsAppController {
 
@@ -216,6 +217,27 @@ export class WhatsAppController {
             e.preventDefault();
 
             let formData = new FormData(this.el.formPanelAddContact);
+
+            let contact = new User(formData.get('email'));
+
+            contact.on('datachange', data=>{
+
+                if (data.name) {
+
+                    this._user.addContact(contact).then(()=>{
+                        
+                        this.el.btnClosePanelAddContact.click();
+                        console.info('Contact added!');
+
+                    });
+
+                } else {
+                    console.error('User not founded');
+                }
+
+            });
+
+            this._user.addContact();
 
         });
 
