@@ -3,7 +3,7 @@ export class Firebase {
     constructor(){
 
         this.init();
-
+  
     }
 
     init(){
@@ -48,8 +48,8 @@ export class Firebase {
 
         return new Promise((s, f)=>{
 
-            var provider = new firebase.auth.GoggleAuthProvider();
-
+           /* let provider = new firebase.auth.GoggleAuthProvider();*/
+            const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
             .then(result => {
 
