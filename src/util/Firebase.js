@@ -2,11 +2,11 @@ export class Firebase {
 
     constructor(){
 
-        this.initFirebase();
+        this.init();
 
     }
 
-    initFirebase(){
+    init(){
 
         const firebaseConfig = {
             apiKey: "AIzaSyBsyQKf_0wPDFvtRyH5CMjiFGULGdzzl4g",
@@ -17,15 +17,17 @@ export class Firebase {
             appId: "1:726106886989:web:38443592d083611669dd04"
         };
         
-        if (!this._initialized) {
+        if (!window._initializedFirebase){
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             
                 firebase.firestore().settings({
                     timestampsInSnapshots: true
                 });
-            
-            this._initialized = true;
+                if(firebase){
+                    console.log("Firebase Status: Running");
+                }
+            window._initializedFirebase = true;
         }
 
     }
@@ -42,5 +44,30 @@ export class Firebase {
 
     } 
 
+    initAuth(){
+
+        return new Promise((s, f)=>{
+
+            var provider = new firebase.auth.GoggleAuthProvider();
+
+            firebase.auth().signInWithPopup(provider)
+            .then(result => {
+
+                let token = result.credential.accessToken;
+                let user = result.user;
+
+                s({
+                    user, 
+                    token
+                });
+
+            })
+            .catch(err=>{
+                f(err);
+            });
+
+        });
+
+    }
 
 }
